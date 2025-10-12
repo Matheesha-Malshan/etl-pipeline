@@ -12,12 +12,14 @@ import org.example.extract.monitor.FileTypeMonitor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
+import tools.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -41,8 +43,12 @@ public class fileMonitorImpl implements FileMonitor {
     private WatchService watchService;
     private ExecutorService watcherExecutor;
     private volatile boolean running=false;
+
     final ExtractorFactory extractorFactory;
     final FileTypeMonitor fileTypeMonitor;
+    final ObjectMapper objectMapper;
+    final BlockingQueue<String> dataQueue;
+
 
     @PostConstruct
     public void start() throws IOException {
@@ -82,7 +88,11 @@ public class fileMonitorImpl implements FileMonitor {
                         File file = fullPath.toFile();
                         ArrayList<Map<String, String>> arrayList=fileExtractor.readFile(file);
 
-                        System.out.println(arrayList.get(0));
+                        for(Map<String, String> ar:arrayList){
+                            String data=objectMapper.writeValueAsString(ar);
+                            dataQueue.put(data);
+                        }
+
                     }
                 }
                 key.reset();

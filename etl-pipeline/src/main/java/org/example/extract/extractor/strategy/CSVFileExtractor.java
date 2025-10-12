@@ -41,7 +41,6 @@ public class CSVFileExtractor implements FileExtractor {
             }
             rows.add(hashMap);
         }
-        System.out.println(rows);
         return rows;
 
     }

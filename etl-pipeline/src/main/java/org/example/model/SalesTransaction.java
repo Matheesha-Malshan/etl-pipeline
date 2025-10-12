@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 
@@ -16,13 +17,13 @@ import java.time.LocalDateTime;
 @Data
 public class SalesTransaction {
 
-    @Id
-    private String transactionId;
-    private LocalDateTime time;
-    private String storedId;
+
+    private String transaction_id;
+    private Timestamp timestamp;
+    private String store_id;
+    private String product_id;
     private int quantity;
     private double price;
     private String customerId;
-    private LocalDateTime createdAt;
 
 }
