@@ -9,6 +9,7 @@ import org.example.extract.extractor.extractorContext.ExtractorFactory;
 import org.example.model.Filetype;
 import org.example.extract.monitor.FileMonitor;
 import org.example.extract.monitor.FileTypeMonitor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,6 @@ import java.util.concurrent.TimeUnit;
 @Service
 @ConditionalOnProperty(name="etl.file-monitor.enabled",havingValue = "true")
 @Slf4j
-@RequiredArgsConstructor
 public class fileMonitorImpl implements FileMonitor {
 
     @Value("${etl.file-monitor.input-directory}")
@@ -44,11 +44,22 @@ public class fileMonitorImpl implements FileMonitor {
     private ExecutorService watcherExecutor;
     private volatile boolean running=false;
 
-    final ExtractorFactory extractorFactory;
-    final FileTypeMonitor fileTypeMonitor;
-    final ObjectMapper objectMapper;
-    final BlockingQueue<String> dataQueue;
+    private final ExtractorFactory extractorFactory;
+    private final FileTypeMonitor fileTypeMonitor;
+    private final ObjectMapper objectMapper;
+    private final BlockingQueue<String> dataQueue;
 
+
+    public fileMonitorImpl(ExtractorFactory extractorFactory,FileTypeMonitor fileTypeMonitor,
+                           ObjectMapper objectMapper,
+                           @Qualifier("extract-transformer")BlockingQueue<String> dataQueue){
+
+        this.extractorFactory=extractorFactory;
+        this.fileTypeMonitor=fileTypeMonitor;
+        this.objectMapper=objectMapper;
+        this.dataQueue=dataQueue;
+
+    }
 
     @PostConstruct
     public void start() throws IOException {

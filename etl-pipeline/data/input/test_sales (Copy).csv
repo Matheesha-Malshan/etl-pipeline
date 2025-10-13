@@ -1,0 +1,4 @@
+transaction_id,timestamp,store_id,product_id,quantity,price,customer_id
+TX001,2025-10-09T14:30:00,S01,P042,2,29.99,C1001
+TX002,2025-10-09T14:31:00,S01,P015,1,899.00,C1002
+TX003,2025-10-09T14:32:00,S02,P103,3,12.50,C1001

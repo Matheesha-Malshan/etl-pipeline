@@ -11,7 +11,7 @@ public abstract class TransformationHandler {
 
     public Object handle(Object input){
         Object result=process(input);
-        if (input==null){
+        if (result==null){
             return 0;
         }
         if (nextHandler!=null){

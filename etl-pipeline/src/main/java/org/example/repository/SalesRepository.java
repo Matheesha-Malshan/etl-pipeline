@@ -1,4 +1,7 @@
 package org.example.repository;
 
-public interface SalesRepository  {
+import org.example.entity.SalesTransactionEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SalesRepository extends JpaRepository<SalesTransactionEntity,String> {
 }

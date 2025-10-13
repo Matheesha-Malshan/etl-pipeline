@@ -14,6 +14,7 @@ public class BusinessRuleValidator extends DataValidator {
 
     @Override
     public boolean processValidate(Object o) {
+
         SalesTransaction salesTransaction=(SalesTransaction) o;
         return validation(salesTransaction);
     }

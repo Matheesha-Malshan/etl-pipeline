@@ -1,22 +1,24 @@
-package org.example.model;
+package org.example.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
-
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @Data
-public class SalesTransaction {
+public class SalesTransactionEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String transaction_id;
     private Timestamp timestamp;
     private String store_id;
@@ -24,7 +26,6 @@ public class SalesTransaction {
     private int quantity;
     private double price;
     private String customerId;
-
     private double total_amount;
     private double tax_amount;
     private double grand_total;
